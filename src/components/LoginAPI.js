@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { InputData } from "./data";
+import '../styles/App.css';
 
 
 const LoginAPI = () => {
