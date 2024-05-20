@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { InputData } from "./data";
 
-const preDefinedUserData = {
-  "abc@gmail.com": "12",
-  "def@gmail.com": "1234",
-  "ghi@gmail.com": "123456",
-};
 
 const LoginAPI = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +14,11 @@ const LoginAPI = () => {
     setPasswordError("");
 
     setTimeout(() => {
-      const user = InputData && InputData.find((user) => user.email === email);
+      // const user = InputData && InputData.find(user => user.email === email);
+      // console.log(`Entered email: ${email}`); // Logs entered email
+      // console.log(`Entered password: ${password}`); // Logs entered password
+      const user = InputData && InputData.find(user => user.email === email);
+      // console.log(`Found user: ${JSON.stringify(user)}`); // Logs found user
       if (!user) {
         setEmailError("User not found");
       } else if (user.password !== password) {
@@ -34,20 +33,20 @@ const LoginAPI = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="input-email">Email :</label>
+          <label htmlFor="input-email">Email:</label>
           <input
             id="input-email"
             type="email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              setEmailError('');
+              setEmailError("");
             }}
           />
           {emailError && <div id="user-error">{emailError}</div>}
         </div>
         <div>
-          <label htmlFor="input-password">Password :</label>
+          <label htmlFor="input-password">Password:</label>
           <input
             id="input-password"
             type="password"
