@@ -1,17 +1,11 @@
 import { useState } from "react";
+import { InputData } from "./data";
 
-const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]{2,4}$/;
-const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d@$!%*?&]{8,}$/;
 const preDefinedUserData = {
-  email: emailRegex,
-  password: strongRegex,
+  "abc@gmail.com": "12",
+  "def@gmail.com": "1234",
+  "ghi@gmail.com": "123456",
 };
-
-// const preDefinedUserData = {
-//   email: "hi8272829@gmail.com",
-//   password: "ayush@12345",
-// };
-
 
 const LoginAPI = () => {
   const [email, setEmail] = useState("");
@@ -25,13 +19,14 @@ const LoginAPI = () => {
     setPasswordError("");
 
     setTimeout(() => {
-        if (!preDefinedUserData.email.test(email)) {
-          setEmailError("Invalid email");
-        } else if (!preDefinedUserData.password.test(password)) {
-          setPasswordError("Password does not meet criteria");
-        } else {
-          alert("Login Successful!");
-        }
+      const user = InputData && InputData.find((user) => user.email === email);
+      if (!user) {
+        setEmailError("User not found");
+      } else if (user.password !== password) {
+        setPasswordError("Password Incorrect");
+      } else {
+        alert("Login Successful!");
+      }
     }, 3000);
   };
 
@@ -46,10 +41,10 @@ const LoginAPI = () => {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              setEmailError("");
+              setEmailError('');
             }}
           />
-          {emailError && <div id="email">{emailError}</div>}
+          {emailError && <div id="user-error">{emailError}</div>}
         </div>
         <div>
           <label htmlFor="input-password">Password :</label>
@@ -62,7 +57,7 @@ const LoginAPI = () => {
               setPasswordError("");
             }}
           />
-          {passwordError && <div id="password">{passwordError}</div>}
+          {passwordError && <div id="password-error">{passwordError}</div>}
         </div>
         <button type="submit" id="submit-form-btn">
           Submit
